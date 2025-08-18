@@ -275,7 +275,7 @@ jobs:
             use_tesseract_sql_planner: true
           - database: databricks-jdbc
             use_tesseract_sql_planner: true
-          - database: trino
+          - database: prestodb
             use_tesseract_sql_planner: true
       fail-fast: false
 
