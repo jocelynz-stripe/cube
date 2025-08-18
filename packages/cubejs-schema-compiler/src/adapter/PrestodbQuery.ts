@@ -142,7 +142,7 @@ export class PrestodbQuery extends BaseQuery {
     templates.statements.select = '{% if ctes %} WITH \n' +
           '{{ ctes | join(\',\n\') }}\n' +
           '{% endif %}' +
-      ' {{ select_concat | map(attribute=\'aliased\') | join(\', \') }}  {% if from %}\n' +
+      'SELECT {{ select_concat | map(attribute=\'aliased\') | join(\', \') }}  {% if from %}\n' +
       'FROM (\n  {{ from }}\n) AS {{ from_alias }} {% elif from_prepared %}\n' +
       'FROM {{ from_prepared }}' +
       '{% endif %}' +
