@@ -1980,7 +1980,7 @@ SELECT 1 AS revenue,  cast('2024-01-01' AS timestamp) as time UNION ALL
         'visitors.visitor_revenue',
       ],
       timeDimensions: [{
-        dimension: 'visitors.created_at',
+        dimension: 'visitors.xcreated_at',
       }],
       order: [{
         id: 'visitors.created_at'
@@ -1993,6 +1993,7 @@ SELECT 1 AS revenue,  cast('2024-01-01' AS timestamp) as time UNION ALL
     console.log(query.buildSqlAndParams());
 
     expect(query.buildSqlAndParams()[0]).toMatch(/OFFSET (\d)\s+LIMIT (\d)/);
+    expect(true).toBe(false);
   });
 
   it('calculated join', async () => {
