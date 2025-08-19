@@ -1993,7 +1993,31 @@ SELECT 1 AS revenue,  cast('2024-01-01' AS timestamp) as time UNION ALL
     console.log(query.buildSqlAndParams());
 
     expect(query.buildSqlAndParams()[0]).toMatch(/OFFSET (\d)\s+LIMIT (\d)/);
-    expect(true).toBe(false);
+  });
+
+  it('limit - bool param cast (PrestoQuery)', async () => {
+    await compiler.compile();
+
+    const query = new PrestodbQuery({ joinGraph, cubeEvaluator, compiler }, {
+      measures: [
+        'visitors.visitor_revenue',
+      ],
+      timeDimensions: [{
+        dimension: 'visitors.xcreated_at',
+      }],
+      filters: [
+        {
+          member: 'visitors.dnc_address',
+          operator: 'equals',
+          values: ['0', null],
+        },
+      ],
+    });
+
+    const queryAndParams = query.buildSqlAndParams();
+    console.log(queryAndParams);
+
+    expect(queryAndParams[0]).toContain('("visitors".dnc_address IN (CAST(? AS BOOLEAN)) OR "visitors".dnc_address IS NULL');
   });
 
   it('calculated join', async () => {
